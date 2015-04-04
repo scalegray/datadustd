@@ -1,5 +1,5 @@
 
-
+'''
 /*
 *
 *
@@ -20,7 +20,7 @@
 * along with this program; if not, see <http://www.gnu.org/licenses/>.
 */
 
-
+'''
 
 import os
 import re
@@ -29,7 +29,7 @@ import subprocess
 import platform
 import sys
 import httplib, urllib
-
+import time
 
 
 import pika
@@ -208,11 +208,14 @@ class system_level:
         diskUtil = self.Disk_Util()
         cpuStats = self.CPU_Stats()
 
+        timestamp = time.strftime("%d/%m/%y") + ' ' + time.strftime("%H:%M:%S")
+
         #payload
         finalPayload = {
                 'os': os
                       }
-
+        if timestamp:
+            finalPayload['timestamp'] = timestamp
         if cpuStats:
             finalPayload['cpuStats'] = cpuStats
         if diskUtil:
