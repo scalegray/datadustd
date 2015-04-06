@@ -183,9 +183,36 @@ class system_level:
 
 #network monitoring
 
-#--
+#--taking it from /proc/net/dev - need to find out what all and how all data can be taken from the procs
+#efficiently. Also need to test the memory usage of the daemon(.)
 
 
+
+def NetworkTraffic(self):
+    if sys.platform == 'linux2':
+        try:
+            procdata = open('/proc/net/dev', 'r')
+            allLines = procdata.readlines()
+            procdata.close()
+
+        except:
+            print ("Error - ")
+            return false
+
+        _,first,second = allLines.split('|')
+        full = first + second
+
+        indexDict = {}
+
+        for line in allLines[2:]:
+            if line.find(':') < 0:
+                continue
+        index, data = line.split(':')
+        fullData = dict(zip(full, data.split()))
+        indexDict[index] = fullData
+
+    return indexDict
+    
  def PostBack(self, Data):
 
     connection = pika.BlockingConnection(pika.ConnectionParameters(

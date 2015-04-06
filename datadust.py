@@ -39,7 +39,7 @@ if (sys.version_info[1]) <= 6:
 
 ddConfig = {
         'version': '0.1.0',
-        'interval': 60
+        'interval': 5
            }
 
 def no_of_cores():
@@ -54,7 +54,7 @@ class datadust_agent(Daemon):
 
 
 
- def run(self):
+ #def run(self):
     BasicStats = {
             'processorType': platform.processor(),
             'noOfCores': no_of_cores(),
